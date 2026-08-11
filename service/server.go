@@ -116,3 +116,11 @@ func (w *statusWriter) WriteHeader(code int) {
 	w.status = code
 	w.ResponseWriter.WriteHeader(code)
 }
+
+// Flush 透传给底层 ResponseWriter，使 logging 中间件包装后仍支持 http.Flusher，
+// 否则 /api/tts/stream 的类型断言会失败。
+func (w *statusWriter) Flush() {
+	if f, ok := w.ResponseWriter.(http.Flusher); ok {
+		f.Flush()
+	}
+}
