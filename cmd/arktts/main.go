@@ -43,7 +43,7 @@ func main() {
 	synth := flag.Bool("synth", false, "执行完整 TTS 推理（生成 WAV）")
 	output := flag.String("output", defaultOutput, "输出 WAV 文件路径")
 	maxNewTokens := flag.Int("max-new-tokens", 1024, "最大生成 token 数")
-	temperature := flag.Float64("temperature", 0.3, "采样温度")
+	temperature := flag.Float64("temperature", 0.7, "采样温度")
 	topP := flag.Float64("top-p", 0.9, "top-p 采样")
 	topK := flag.Int("top-k", 50, "top-k 采样")
 	seed := flag.Int64("seed", 42, "随机种子")

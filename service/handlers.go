@@ -158,7 +158,7 @@ func (s *Server) respondAudio(w http.ResponseWriter, samples []float32, format s
 }
 
 // buildOptions 从请求构造 GenerateOptions，未提供的字段使用默认值
-// （与 Python service 默认一致：temperature=0.3, 其余同 CLI）。
+// （默认参数与 CLI 一致：temperature=0.7）。
 func buildOptions(req *TtsRequest) (inference.GenerateOptions, error) {
 	if len(req.Text) < 1 || len(req.Text) > 1000 {
 		return inference.GenerateOptions{}, fmt.Errorf("text length must be 1..1000, got %d", len(req.Text))
@@ -169,7 +169,7 @@ func buildOptions(req *TtsRequest) (inference.GenerateOptions, error) {
 
 	opts := inference.GenerateOptions{
 		MaxNewTokens: 1024,
-		Temperature:  0.3,
+		Temperature:  0.7,
 		TopP:         0.9,
 		TopK:         50,
 		Seed:         42,
