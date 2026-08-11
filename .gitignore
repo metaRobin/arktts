@@ -1,0 +1,25 @@
+# 编译产物
+/cmd/arktts-cli
+/cmd/arktts-server
+/arktts
+*.exe
+
+# 模型文件（按 README 用 hf download 单独下载，不入库）
+/cmd/model/
+
+# ONNX Runtime 运行时库（平台二进制，单独下载）
+/cmd/onnxruntime-*/
+
+# voices 数据（由 registration 流程生成）
+/cmd/voices/
+
+# 推理输出
+/output*.wav
+/*_codes.txt
+
+# Go 测试/基准产物
+*.out
+*.test
+
+# macOS
+.DS_Store
