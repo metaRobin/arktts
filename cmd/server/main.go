@@ -3,7 +3,7 @@
 // 环境变量（与 Python 版一致）：
 //
 //	ARKTTS_MODEL_DIR        模型目录（默认 model）
-//	ARKTTS_VOICES_DIR       voice 目录（默认 voices）
+//	ARKTTS_VOICES_DIR       voice 目录（默认 reference_voices）
 //	ARKTTS_REGISTRATION_DIR 注册目录（默认 $MODEL_DIR/registration）
 //	ARKTTS_THREADS          ONNX Runtime CPU 线程数（默认 5）
 //	ARKTTS_ONNX_LIB         ONNX Runtime 动态库路径（默认自动检测）
@@ -27,7 +27,7 @@ import (
 
 func main() {
 	modelDir := envOr("ARKTTS_MODEL_DIR", "model")
-	voicesDir := envOr("ARKTTS_VOICES_DIR", "voices")
+	voicesDir := envOr("ARKTTS_VOICES_DIR", "reference_voices")
 	registrationDir := envOr("ARKTTS_REGISTRATION_DIR", filepath.Join(modelDir, "registration"))
 	threads := envIntOr("ARKTTS_THREADS", 5)
 	libPath := envOr("ARKTTS_ONNX_LIB", defaultOnnxLibPath())

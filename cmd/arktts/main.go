@@ -15,7 +15,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -30,7 +29,7 @@ func main() {
 	log.SetFlags(0)
 
 	defaultModelDir := "model"
-	defaultVoicesDir := "voices"
+	defaultVoicesDir := "reference_voices"
 	defaultLibPath := defaultOnnxLibPath()
 	defaultOutput := "output.wav"
 
@@ -141,33 +140,8 @@ func main() {
 	}
 	log.Printf("✅ 已保存 %s (%.2f 秒, %d Hz)", *output, float64(len(audioSamples))/float64(m.SampleRate), m.SampleRate)
 
-	// 保存 codes
-	codesPath := filepath.Join(filepath.Dir(*output), filepath.Base(*output)+"_codes.txt")
-	if err := writeCodesFile(codesPath, codes); err != nil {
-		log.Printf("警告: 保存 codes 失败: %v", err)
-	} else {
-		log.Printf("✅ 已保存 %s", codesPath)
-	}
 }
 
-func writeCodesFile(path string, codes [][]int64) error {
-	f, err := os.Create(path)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-	for cb, row := range codes {
-		fmt.Fprintf(f, "# codebook %d\n", cb)
-		for i, v := range row {
-			if i > 0 {
-				f.Write([]byte(" "))
-			}
-			fmt.Fprintf(f, "%d", v)
-		}
-		f.Write([]byte("\n"))
-	}
-	return nil
-}
 
 // defaultOnnxLibPath 返回当前平台的 ONNX Runtime 库默认路径。
 func defaultOnnxLibPath() string {
