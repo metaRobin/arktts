@@ -11,7 +11,7 @@
 /cmd/onnxruntime-*/
 
 # voices 数据（由 registration 流程生成）
-/cmd/voices/
+/cmd/reference_voices/
 
 # 推理输出
 /output*.wav
