@@ -83,7 +83,7 @@ func (e *Encoder) Encode(audio []float32) ([][]int64, error) {
 			// [1, num_codebooks, T]
 			numCodebooks := int(shape[1])
 			t := int(shape[2])
-			if t == 0 {
+			if t <= 0 {
 				t = len(codesFlat) / numCodebooks
 			}
 			return reshapeCodes(codesFlat, numCodebooks, t), nil
@@ -92,7 +92,7 @@ func (e *Encoder) Encode(audio []float32) ([][]int64, error) {
 			// [num_codebooks, T]
 			numCodebooks := int(shape[0])
 			t := int(shape[1])
-			if t == 0 {
+			if t <= 0 {
 				t = len(codesFlat) / numCodebooks
 			}
 			return reshapeCodes(codesFlat, numCodebooks, t), nil
