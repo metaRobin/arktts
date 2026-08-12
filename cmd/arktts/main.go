@@ -28,9 +28,10 @@ import (
 func main() {
 	log.SetFlags(0)
 
-	defaultModelDir := "model"
-	defaultVoicesDir := "reference_voices"
-	defaultLibPath := defaultOnnxLibPath()
+	exeDir := exeDir()
+	defaultModelDir := envOr("ARKTTS_MODEL_DIR", filepath.Join(exeDir, "model"))
+	defaultVoicesDir := envOr("ARKTTS_VOICES_DIR", filepath.Join(exeDir, "reference_voices"))
+	defaultLibPath := envOr("ARKTTS_ONNX_LIB", filepath.Join(exeDir, defaultOnnxLibPath()))
 	defaultOutput := "output.wav"
 
 	modelDir := flag.String("model-dir", defaultModelDir, "模型目录")
@@ -142,6 +143,24 @@ func main() {
 
 }
 
+
+// exeDir 返回可执行文件所在目录，用于解析默认的 model/voices/lib 相对路径，
+// 使 arktts-cli 可从任意工作目录运行（只要 model/voices/onnxruntime 与二进制同目录）。
+func exeDir() string {
+	exe, err := os.Executable()
+	if err != nil {
+		return "."
+	}
+	return filepath.Dir(exe)
+}
+
+// envOr 读取环境变量，未设置时返回默认值。
+func envOr(key, def string) string {
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return def
+}
 
 // defaultOnnxLibPath 返回当前平台的 ONNX Runtime 库默认路径。
 func defaultOnnxLibPath() string {
